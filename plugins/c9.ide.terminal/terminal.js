@@ -205,6 +205,12 @@ define(function(require, exports, module) {
                 var fcolor = settings.get("user/terminal/@foregroundColor");
                 var bcolor = settings.get("user/terminal/@backgroundColor");
                 var scolor = settings.get("user/terminal/@selectionColor");
+                var colors = [bcolor];
+                ["red", "green", "yellow", "blue", "magenta", "cyan", "white",
+                "brblack", "brred", "brgreen", "bryellow", "brblue", "brmagenta",
+                "brcyan", "brwhite"].forEach(function(i) {
+                    colors.push(settings.get("user/terminal/palette/@" + i));
+                });
                 [
                     [cname, "fontFamily", settings.get("user/terminal/@fontfamily")
                         || "Ubuntu Mono, Menlo, Consolas, monospace"],
@@ -219,29 +225,26 @@ define(function(require, exports, module) {
                 });
 
                 // Small hack until we have terminal themes
-                var colors;
-                if (bcolor == "#eaf0f7") {
-                    colors = [
-                      // dark:
-                      '#eaf0f7', // background wrong link
-                      '#cc0000',
-                      '#4e9a06',
-                      '#c4a000',
-                      '#3465a4',
-                      '#75507b',
-                      '#06989a',
-                      '#d3d7cf',
-                      // bright:
-                      '#555753', // grey
-                      '#ef2929', // red
-                      '#579818', // green
-                      '#C3A613', // yellow
-                      '#5183B8', // blue
-                      '#ad7fa8', // purple
-                      '#20C7C7', // mint
-                      '#BBBBBB' // light grey
-                    ];
-                }
+                // colors = [
+                //     // normal:
+                //     '#eaf0f7', // background wrong link
+                //     '#cc0000', // red
+                //     '#4e9a06', // green
+                //     '#c4a000', // yellow
+                //     '#3465a4', // blue
+                //     '#75507b', // magenta
+                //     '#06989a', // cyan
+                //     '#d3d7cf', // white
+                //     // bold:
+                //     '#555753', // grey
+                //     '#ef2929', // red
+                //     '#579818', // green
+                //     '#C3A613', // yellow
+                //     '#5183B8', // blue
+                //     '#ad7fa8', // purple
+                //     '#20C7C7', // mint
+                //     '#BBBBBB' // light grey
+                // ];
 
                 libterm.setColors(fcolor, bcolor, colors);
 
@@ -265,10 +268,29 @@ define(function(require, exports, module) {
                     ["scrollback", 1000]
                 ]);
 
+                settings.setDefaults("user/terminal/palette", [
+                    ["red", '#d70000'],
+                    ["green", '#5f8700'],
+                    ["yellow", '#af8700'],
+                    ["blue", '#0087ff'],
+                    ["magenta", '#af005f'],
+                    ["cyan", '#00afaf'],
+                    ["white", '#e4e4e4'],
+                    ["brblack", '#1c1c1c'],
+                    ["brred", '#d75f00'],
+                    ["brgreen", '#585858'],
+                    ["bryellow", '#626262'],
+                    ["brblue", '#808080'],
+                    ["brmagenta", '#5f5faf'],
+                    ["brcyan", '#8a8a8a'],
+                    ["brwhite", '#ffffd7']
+                ]);
+
                 setSettings();
             }, handle);
 
             settings.on("user/terminal", setSettings);
+            settings.on("user/terminal/palette", setSettings);
 
             layout.on("themeChange", function(e) {
                 setSettings();
@@ -309,6 +331,81 @@ define(function(require, exports, module) {
                            type: "colorbox",
                            path: "user/terminal/@selectionColor",
                            position: 10250
+                        },
+                        "Red" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@red",
+                            position: 10260
+                        },
+                        "Green" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@green",
+                            position: 10261
+                        },
+                        "Yellow" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@yellow",
+                            position: 10262
+                        },
+                        "Blue" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@blue",
+                            position: 10263
+                        },
+                        "Magenta" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@magenta",
+                            position: 10264
+                        },
+                        "Cyan" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@cyan",
+                            position: 10265
+                        },
+                        "White" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@white",
+                            position: 10266
+                        },
+                        "Bright/Bold Black" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@brblack",
+                            position: 10267
+                        },
+                        "Bright/Bold Red" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@brred",
+                            position: 10270
+                        },
+                        "Bright/Bold Green" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@brgreen",
+                            position: 10271
+                        },
+                        "Bright/Bold Yellow" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@bryellow",
+                            position: 10272
+                        },
+                        "Bright/Bold Blue" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@brblue",
+                            position: 10273
+                        },
+                        "Bright/Bold Magenta" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@brmagenta",
+                            position: 10274
+                        },
+                        "Bright/Bold Cyan" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@brcyan",
+                            position: 10275
+                        },
+                        "Bright/Bold White" : {
+                            type: "colorbox",
+                            path: "user/terminal/palette/@brwhite",
+                            position: 10276
                         },
                         "Font Family" : {
                            type: "textbox",
